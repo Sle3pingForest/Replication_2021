@@ -42,10 +42,10 @@ public class Synchronizer {
      {
         //A
       for(Iterator it= dirtyPaths1.iterator(); it.hasNext();)
-          fs1.getChildren(it.next());  //a remplacer avec setchildren
+          fs1.getChildren(it.next());  //a remplacer avec setchildren IL  Y A DEUX TYPE CHILDREN : DIR OR FILE  ->  ifRep = True  => children is a rep
       //B
       for(Iterator it= dirtyPaths2.iterator(); it.hasNext();)
-          fs2.getChildren(it.next());  //a remplacer avec setchildren
+          fs2.getChildren(it.next());  //a remplacer avec setchildren 
       FileSystem A0 = fs1; 
       FileSystem B0 = fs2 ; 
       

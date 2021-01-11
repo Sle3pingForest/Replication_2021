@@ -5,26 +5,58 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LocalFileSystem implements FileSystem{
+	private String nameRep;
 	private File file;
+	private String absolutepathRep;
 	private List<String> listFile;
+	private List<String> listRep;
+	private List<String> dirty1;
+	private List<String> dirty2;
+	private boolean ifRep = false;
 	
 	public LocalFileSystem() {
-		
+		this.listFile = new ArrayList<String>();
+		this.listRep = new LinkedList<String>();
+		this.dirty1 = new ArrayList<String>();
+		this.dirty2 = new ArrayList<String>();
 	}
 
-	public LocalFileSystem(String path) {
-		this.file = new File(path);
+	//init dirty list because this constructor is a REP
+	public LocalFileSystem(String repName) {
+		this.nameRep= repName;
+		this.absolutepathRep = createDirectory(repName);
 		this.listFile = new ArrayList<String>();
-		listFile.add(file.getName());
+		this.listRep = new LinkedList<String>();
+		this.dirty1 = new ArrayList<String>();
+		this.dirty2 = new ArrayList<String>();
+		this.listRep.add(this.absolutepathRep);
+		this.ifRep = true;
+	}
+	
+	//construtor a FILE and rep, add file in rep
+	public LocalFileSystem(String repName, File file) {
+		this.absolutepathRep = createDirectory(repName);
+
+		this.file = createFile(this.absolutepathRep +"/"+file.getName());
+		this.listFile = new ArrayList<String>();
+		this.listRep = new LinkedList<String>();
+		this.listFile.add(file.getAbsolutePath());
+		this.ifRep = false;
 	}
 	
 	
 	@Override
-	public String getRooot() {
-		return this.file.getAbsolutePath();
+	public String getRooot() {	
+		if(ifRep) {
+			return this.absolutepathRep;
+		}
+		else {
+			return this.getAbsolutePath(file);
+		}
 	}
 
 	@Override
@@ -37,21 +69,63 @@ public class LocalFileSystem implements FileSystem{
 	}
 
 	@Override
-	public List<String> getChildren(String path) {
-		File f = new File(path);
-		return null;
+	public List<FileSystem> getChildren() {
+
+		List<FileSystem> listChildren = new ArrayList<FileSystem>();
+		for(String s : listFile) {
+			File f = new File(s);
+			LocalFileSystem lfs = new LocalFileSystem(f.getParent(), f);
+			lfs.setIfRep(false);
+			listChildren.add(lfs);
+		} 
+		for(String s : listRep) {
+			LocalFileSystem lfs = new LocalFileSystem(s);
+			lfs.setIfRep(true);
+			listChildren.add(lfs);
+		}
+		return listChildren;
 	}
 
-	public void setChildren(String path, String name) {
-		if(!getChildren(path).contains(name)) {
-			this.getChildren(path).add(name);
+	@Override
+	public boolean isIfRep() {
+		return ifRep;
+	}
+
+	@Override
+	public void setIfRep(boolean ifRep) {
+		this.ifRep = ifRep;
+	}
+
+	@Override
+	public void setChildrenFile(String path) {
+		String s = this.getAbsolutepathRep() + "/" + path;
+		if(!listFile.contains(s)) {
+			this.file = this.createFile(s);
+			this.listFile.add(file.getAbsolutePath());
 		}
 		else {
-			this.createFile(name);
+			System.out.println("File exist");
 		}
+	}
+	
+	@Override
+	public void setChildrenRep(String path) {
+		String s = this.getAbsolutepathRep() + "/" + path;
+		if(!listRep.contains(s)) {
+			this.absolutepathRep = this.createDirectory(s);
+			this.listRep.add(this.absolutepathRep);
+		}
+		else {
+			System.out.println("Dir exist");
+		}
+	}
+	
+	@Override
+	public void copyChildren(String path) {
 		
 		
 	}
+	
 	@Override
 	public List<String> getAncestors(String path) {
 		// TODO Auto-generated method stub
@@ -77,9 +151,6 @@ public class LocalFileSystem implements FileSystem{
 
 	@Override
 	public void replace(String absolutePathTargetFS, FileSystem fsSource, String absolutePathSourceFS)  throws Exception  {
-		for (String s : fsSource.getChildren(absolutePathSourceFS)) {
-			this.fileCopy2(absolutePathTargetFS + "/" +s , absolutePathTargetFS + "/"+s);
-		}
 		
 	}
 
@@ -101,11 +172,10 @@ public class LocalFileSystem implements FileSystem{
 			e.printStackTrace();
 		}
 		return f;
-		
 	}
 
 	@Override
-	public void createDirectory(String path) {
+	public String createDirectory(String path) {
 		File file = new File(path);
 		if(!file.exists()) {
 			if(file.mkdir()) {
@@ -113,6 +183,7 @@ public class LocalFileSystem implements FileSystem{
 			}
 			else System.out.println("Failed to create directory");
 		};
+		return file.getAbsolutePath();
 	}
 	
 	
@@ -137,9 +208,35 @@ public class LocalFileSystem implements FileSystem{
 
 	@Override
 	public void fileCopy(FileSystem input, FileSystem output) throws Exception {
-		// TODO Auto-generated method stub
+	 // pas ide pour code sa attend un peu
 		
 	}
 
+	public String getAbsolutepathRep() {
+		return absolutepathRep;
+	}
+
+	@Override
+	public void setAbsolutepathRep(String absolutepathRep) {
+		this.absolutepathRep = absolutepathRep;
+	}
+
+	public List<String> getListFile() {
+		return listFile;
+	}
+
+	public void setListFile(List<String> listFile) {
+		this.listFile = listFile;
+	}
+
+	public List<String> getListRep() {
+		return listRep;
+	}
+
+	public void setListRep(List<String> listRep) {
+		this.listRep = listRep;
+	}
+	
+	
 
 }

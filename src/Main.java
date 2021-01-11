@@ -3,15 +3,24 @@ import java.io.File;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		LocalFileSystem lsf = new LocalFileSystem();
-		//lsf.createDirectory("A/A2");
-		//lsf.createDirectory("B/B2");
+		LocalFileSystem lsf = new LocalFileSystem("O");
+
+		LocalFileSystem lsfA = new LocalFileSystem("A");
 		
-		//lsf.fileCopy("O/O2/b" ,"B/B2/b");
-		//System.out.println(lsf.getParents("O"));
-		File test = lsf.createFile("Test.txt");
-		//System.out.println(lsf.getAbsolutePath(test));
-		//System.out.println(lsf.getRelativePath(test));
-		//lsf.replace(absolutePathTargetFS, lsf, absolutePathSourceFS);
+		File a = new File("a");
+		File b = new File("b");
+		LocalFileSystem lsf1 = new LocalFileSystem("O", a);
+		
+		System.out.println(lsf.getRooot());
+		lsf.setChildrenFile(b.getName());
+		System.out.println(lsf.getRooot());
+		lsf1.setChildrenRep("02");
+		//lsf.fileCopy2(a.getName(), "02");
+		lsfA.fileCopy(lsfA, lsf);
+		System.out.println(lsfA.getAbsolutepathRep());
+		File c = new File("O/O2/C");
+		System.out.println(c.getParent());
+		
+		
 	}
 }
