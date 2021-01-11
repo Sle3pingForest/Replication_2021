@@ -1,4 +1,3 @@
-package com.mycompany.project.src;
 
 import java.util.List;
 

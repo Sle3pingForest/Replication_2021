@@ -6,11 +6,12 @@ public interface FileSystem {
 	public String getParents(String path);
 	public List<String> getChildren(String path);
 	public List<String> getAncestors(String path);
-	public String getAbsolutePath(String absolutePath);
-	public String getRelativePath(String relativePath);
-	public void replace(String absolutePathTargetFS, FileSystem fsSource, String absolutePathSourceFS);
+	public String getAbsolutePath(File absolutePath);
+	public String getRelativePath(File relativePath);
+	public void replace(String absolutePathTargetFS, FileSystem fsSource, String absolutePathSourceFS) throws Exception ;
 	public FileSystem getReference();
-	public File createDirectory(String path) throws Exception;
+	public void createDirectory(String path) throws Exception;
+	public File createFile(String name);
 	public void fileCopy( String input, String output) throws Exception;
 
 }
