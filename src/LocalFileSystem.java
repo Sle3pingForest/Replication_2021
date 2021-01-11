@@ -78,7 +78,7 @@ public class LocalFileSystem implements FileSystem{
 	@Override
 	public void replace(String absolutePathTargetFS, FileSystem fsSource, String absolutePathSourceFS)  throws Exception  {
 		for (String s : fsSource.getChildren(absolutePathSourceFS)) {
-			this.fileCopy(absolutePathTargetFS + "/" +s , absolutePathTargetFS + "/"+s);
+			this.fileCopy2(absolutePathTargetFS + "/" +s , absolutePathTargetFS + "/"+s);
 		}
 		
 	}
@@ -115,8 +115,9 @@ public class LocalFileSystem implements FileSystem{
 		};
 	}
 	
+	
 	@Override
-	public void fileCopy( String input, String output) throws Exception {
+	public void fileCopy2( String input, String output) throws Exception {
 
 		File fileI = new File(input);
 		File fileO = new File(output);
@@ -132,6 +133,12 @@ public class LocalFileSystem implements FileSystem{
 			os.close();
 		}
 		else System.out.println("Input file n'exists pas");
+	}
+
+	@Override
+	public void fileCopy(FileSystem input, FileSystem output) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 

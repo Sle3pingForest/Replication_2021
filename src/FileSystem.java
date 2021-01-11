@@ -12,6 +12,7 @@ public interface FileSystem {
 	public FileSystem getReference();
 	public void createDirectory(String path) throws Exception;
 	public File createFile(String name);
-	public void fileCopy( String input, String output) throws Exception;
+	public void fileCopy( FileSystem input, FileSystem output) throws Exception;
+	public void fileCopy2( String input, String output) throws Exception;
 
 }
