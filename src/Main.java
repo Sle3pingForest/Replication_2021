@@ -3,23 +3,23 @@ import java.io.File;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		LocalFileSystem lsf = new LocalFileSystem("O");
-
+		
+		LocalFileSystem lsfO = new LocalFileSystem("O");
 		LocalFileSystem lsfA = new LocalFileSystem("A");
+		LocalFileSystem lsfB= new LocalFileSystem("B");
 		
-		File a = new File("a");
-		File b = new File("b");
-		LocalFileSystem lsf1 = new LocalFileSystem("O", a);
+		lsfO.setChildrenFile("a");
+		lsfO.setChildrenFile("b");
+		lsfO.setChildrenFile("Test");
+		lsfO.setChildrenRep("DIR");
 		
-		System.out.println(lsf.getRooot());
-		lsf.setChildrenFile(b.getName());
-		System.out.println(lsf.getRooot());
-		lsf1.setChildrenRep("02");
-		//lsf.fileCopy2(a.getName(), "02");
-		lsfA.fileCopy(lsfA, lsf);
 		System.out.println(lsfA.getAbsolutepathRep());
-		File c = new File("O/O2/C");
-		System.out.println(c.getParent());
+		System.out.println(lsfA.getParents(lsfA.getAbsolutepathRep()));
+		System.out.println(lsfA.getChildren());
+		
+		lsfO.fileCopy(lsfO, lsfB);
+		lsfO.fileCopy(lsfO, lsfA);
+		
 		
 		
 	}
