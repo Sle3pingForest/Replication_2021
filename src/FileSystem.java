@@ -20,5 +20,7 @@ public interface FileSystem {
 	public void copyChildren(String path);
 	public void setIfRep(boolean ifRep);
 	boolean isIfRep();
+	File getFile();
+	List<String> getListFile();
 
 }
