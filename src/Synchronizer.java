@@ -27,13 +27,25 @@ public class Synchronizer {
             //condition 1
             if (!dirtyPaths1.contains(currentRelativePath) && !dirtyPaths2.contains(currentRelativePath)) {
                 //return A and B
-                fs1.createDirectory(currentRelativePath);
-                fs2.createDirectory(currentRelativePath);
+               //String fsUn =   fs1.createDirectory(currentRelativePath);
+               FileSystem c = new LocalFileSystem("C");
+               c.fileCopy(fs1,c);
+               FileSystem d = new LocalFileSystem("D"); 
+               d.fileCopy(fs2,d);
             } //condition 3 
             else if (!dirtyPaths1.contains(currentRelativePath)) {
+                
                 fs1.fileCopy(fs2, fs1);
+                 FileSystem c = new LocalFileSystem("C");
+                 c.fileCopy(fs1,c);
+                 FileSystem d = new LocalFileSystem("D"); 
+                 d.fileCopy(fs2,d);
             } else if (!dirtyPaths2.contains(currentRelativePath)) {
-                fs1.fileCopy(fs1, fs1);
+                fs2.fileCopy(fs1, fs2);
+                 FileSystem c = new LocalFileSystem("C");
+                 c.fileCopy(fs1,c);
+                 FileSystem d = new LocalFileSystem("D"); 
+                 d.fileCopy(fs2,d);
             } //Condition2 
             else {
                 //A
