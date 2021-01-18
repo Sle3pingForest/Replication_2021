@@ -1,4 +1,6 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -10,6 +12,8 @@ public class Main {
 		
 		lsfO.setChildrenFile("a");
 		lsfO.setChildrenFile("b");
+
+		lsfA.setChildrenFile("h");
 		lsfO.setChildrenFile("Test");
 		lsfO.setChildrenRep("DIR");
 		
@@ -20,6 +24,20 @@ public class Main {
 		lsfO.fileCopy(lsfO, lsfB);
 		lsfO.fileCopy(lsfO, lsfA);
 		
+		lsfA.setChildrenRep("DirTest");
+		
+
+        Synchronizer s = new Synchronizer(); 
+		List<String> dirtyPaths = new ArrayList<String>();
+		List<String> dirtyPaths2 = new ArrayList<String>();
+		
+		 for(FileSystem fs : lsfA.getChildren()) {
+			 
+			 dirtyPaths.add(fs.getRooot());
+		 }
+		
+        
+        s.reconcile(lsfA, dirtyPaths, lsfB, dirtyPaths2, lsfO.getRooot());
 		
 		
 	}

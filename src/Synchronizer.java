@@ -25,7 +25,7 @@ public class Synchronizer {
     {
         try {
             //condition 1
-            if (!dirtyPaths1.contains(currentRelativePath) && !dirtyPaths2.contains(currentRelativePath)) {
+            if (!dirtyPaths1.isEmpty() && !dirtyPaths2.isEmpty()) {
                 //return A and B
                //String fsUn =   fs1.createDirectory(currentRelativePath);
                FileSystem c = new LocalFileSystem("C");
@@ -33,19 +33,21 @@ public class Synchronizer {
                FileSystem d = new LocalFileSystem("D"); 
                d.fileCopy(fs2,d);
             } //condition 3 
-            else if (!dirtyPaths1.contains(currentRelativePath)) {
-                
+            else if (!dirtyPaths2.isEmpty()) {
+
+            	System.out.println("dirty 2");
                 fs1.fileCopy(fs2, fs1);
                  FileSystem c = new LocalFileSystem("C");
-                 c.fileCopy(fs1,c);
+                 c.fileCopy(fs2,c);
                  FileSystem d = new LocalFileSystem("D"); 
                  d.fileCopy(fs2,d);
-            } else if (!dirtyPaths2.contains(currentRelativePath)) {
+            } else if (!dirtyPaths1.isEmpty()) {
+            	System.out.println("dirty 1 ");
                 fs2.fileCopy(fs1, fs2);
                  FileSystem c = new LocalFileSystem("C");
                  c.fileCopy(fs1,c);
                  FileSystem d = new LocalFileSystem("D"); 
-                 d.fileCopy(fs2,d);
+                 d.fileCopy(fs1,d);
             } //Condition2 
             else {
                 //A
@@ -71,6 +73,11 @@ public class Synchronizer {
     public List<String> computeDirty(FileSystem lastSync, FileSystem fs, String currentRelativePath) 
     {
       List<String> modify = null ;  
+      /*
+       * 
+       * 
+       * 
+       * */
        
      return modify;
     
