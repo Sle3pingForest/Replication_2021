@@ -40,6 +40,7 @@ public class LocalFileSystem implements FileSystem{
 	
 	@Override
 	public void setChildrenFile(String path) {
+		String temp =  this.getAbsolutepathRep();
 		String s = this.getAbsolutepathRep() + "/" + path;
 		if(!listFile.contains(s)) {
 
@@ -50,10 +51,14 @@ public class LocalFileSystem implements FileSystem{
 		else {
 			System.out.println("File exist");
 		}
+		
+		this.absolutepathRep = temp;
 	}
 	
 	@Override
 	public void setChildrenRep(String path) {
+
+		String temp =  this.getAbsolutepathRep();
 		String s = this.getAbsolutepathRep() + "/" + path;
 		if(!listRep.contains(s)) {
 			this.absolutepathRep = this.createDirectory(s);
@@ -62,6 +67,8 @@ public class LocalFileSystem implements FileSystem{
 		else {
 			System.out.println("Dir exist");
 		}
+
+		this.absolutepathRep = temp;
 	}
 	
 	

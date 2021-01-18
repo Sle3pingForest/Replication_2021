@@ -12,9 +12,9 @@ public class Main {
 		
 		lsfO.setChildrenFile("a");
 		lsfO.setChildrenFile("b");
-
-		lsfA.setChildrenFile("h");
+		
 		lsfO.setChildrenFile("Test");
+		
 		lsfO.setChildrenRep("DIR");
 		
 		System.out.println(lsfA.getAbsolutepathRep());
@@ -24,8 +24,12 @@ public class Main {
 		lsfO.fileCopy(lsfO, lsfB);
 		lsfO.fileCopy(lsfO, lsfA);
 		
+		
+
+		lsfA.setChildrenFile("h");
 		lsfA.setChildrenRep("DirTest");
 		
+		/*
 
         Synchronizer s = new Synchronizer(); 
 		List<String> dirtyPaths = new ArrayList<String>();
@@ -38,7 +42,7 @@ public class Main {
 		
         
         s.reconcile(lsfA, dirtyPaths, lsfB, dirtyPaths2, lsfO.getRooot());
-		
+		*/
 		
 	}
 }
