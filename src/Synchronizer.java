@@ -79,10 +79,25 @@ public class Synchronizer {
        * 
        * 
        * */
-         List<FileSystem> listChildren = new ArrayList<FileSystem>();
-         listChildren = fs.getChildren(currentRelativePath);
-         for(FileSystem s : listChildren) {
-             System.out.println(s.getRooot());
+         List<FileSystem> listChildrenO = new ArrayList<FileSystem>();
+         listChildrenO = fs.getChildren(currentRelativePath);
+         
+         
+          List<FileSystem> listChildrenA = new ArrayList<FileSystem>();
+         listChildrenA = lastSync.getChildren(lastSync.getRooot());
+         
+         for(FileSystem a : listChildrenO) {
+             if(listChildrenO.contains(a.getRooot()))
+             {
+                 System.out.println("dossier original rien a faire ");
+                 
+             }
+             else 
+             {
+                 modify.add(a.getRooot()); 
+             }
+             
+             
              
          }
      return modify;
