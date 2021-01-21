@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -78,7 +79,12 @@ public class Synchronizer {
        * 
        * 
        * */
-       
+         List<FileSystem> listChildren = new ArrayList<FileSystem>();
+         listChildren = fs.getChildren(currentRelativePath);
+         for(FileSystem s : listChildren) {
+             System.out.println(s.getRooot());
+             
+         }
      return modify;
     
     }

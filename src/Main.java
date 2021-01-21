@@ -28,7 +28,8 @@ public class Main {
 
 		lsfA.setChildrenFile("h");
 		lsfA.setChildrenRep("DirTest");
-		
+                Synchronizer s = new Synchronizer(); 
+		  List<String>  compute = s.computeDirty(lsfO, lsfA, lsfO.getRooot()); 
 		/*
 
         Synchronizer s = new Synchronizer(); 

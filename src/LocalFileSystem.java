@@ -81,7 +81,7 @@ public class LocalFileSystem implements FileSystem{
 	@Override
 	public String getParents(String path) {
 		String[] l = path.split("/");
-		return  l[(l.length - 2)];
+		return  l[(l.length - 1)];
 	}
 
 	@Override
@@ -211,6 +211,7 @@ public class LocalFileSystem implements FileSystem{
 			 output.setChildrenRep(name);
 		 }
 		 else {
+                      System.out.println(" je suis la " +name );
 			output.setChildrenFile(name); 
 			output.fileCopy2(s.getRooot(), output.getFile().getAbsolutePath());
 		 }
@@ -248,5 +249,21 @@ public class LocalFileSystem implements FileSystem{
 	public File getFile() {
 		return this.file;
 	}
+
+    @Override
+    public List<FileSystem> getChildren(String path) {
+        List<FileSystem> listChildren = new ArrayList<FileSystem>();
+		for(File s : files) {
+			LocalFileSystem file =  new LocalFileSystem(path);
+			file.setIfRep(false);
+			listChildren.add(file);
+		} 
+		for(String s : listRep) {
+			LocalFileSystem lfs = new LocalFileSystem(s);
+			lfs.setIfRep(true);
+			listChildren.add(lfs);
+		}
+		return listChildren;
+    }
 
 }
