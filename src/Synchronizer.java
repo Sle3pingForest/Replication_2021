@@ -79,27 +79,60 @@ public class Synchronizer {
        * 
        * 
        * */
+      // fs = O ;  LastSync  C et current relaive path pour le dossier actuelle 
+       // d'abords je recupere la liste de 0 
+        //list of O files 
          List<FileSystem> listChildrenO = new ArrayList<FileSystem>();
-         listChildrenO = fs.getChildren(currentRelativePath);
+         listChildrenO = fs.getChildren(fs.getRooot());
+         List<String> O =  new ArrayList<String>();
+         for(FileSystem a : listChildrenO) 
+             O.add(a.getName(a.getRooot()));
          
-         
-          List<FileSystem> listChildrenA = new ArrayList<FileSystem>();
-         listChildrenA = lastSync.getChildren(lastSync.getRooot());
-         
-         for(FileSystem a : listChildrenO) {
-             if(listChildrenO.contains(a.getRooot()))
-             {
-                 System.out.println("dossier original rien a faire ");
                  
-             }
-             else 
-             {
-                 modify.add(a.getRooot()); 
-             }
-             
-             
-             
-         }
+        // je recupere la lsite de current path  
+         List<FileSystem> listChildrenC= new ArrayList<FileSystem>();
+         listChildrenC = fs.getChildren(currentRelativePath);
+         List<String> C =  new ArrayList<String>();
+          for(FileSystem a : listChildrenC) 
+             C.add(a.getName(a.getRooot()));
+         
+        // et enfin je recupere la liste de dernier sync de fichier 
+        
+         List<FileSystem> lastS= new ArrayList<FileSystem>();
+         lastS= lastSync.getChildren(lastSync.getRooot());
+         List<String> LS =  new ArrayList<String>();
+         for(FileSystem a : lastS) 
+             LS.add(a.getName(a.getRooot()));
+         
+         
+         // je verifie si il ya un dossier qui existe dans O et qu il nexiste pas dans A et qu il existe en C 
+         
+         
+         // maintenat je commence à comparer le fichier de 
+          for(String a : O ){
+              System.out.println(" je teste ce dossier  " + a);
+              // s il existe dans A 
+              if(C.contains(a)){
+                   System.out.println(" A Oui il contient ");
+                  //je verifie s'il existe dans C 
+                  if(!LS.contains(a))
+                  {
+                      System.out.println(" C Oui il contient ");
+                      modify.add(lastSync.getRooot()+a); // donc je le rajoute 
+                  }
+              }
+              else { // alors s 'il n'existe pas dans a et qu il existe dans c il faut l effacer 
+                  
+                  if(LS.contains(a)){
+                      //effacer 
+                  }
+              }
+          } 
+         
+     
+         
+         
+         
      return modify;
     
     }
