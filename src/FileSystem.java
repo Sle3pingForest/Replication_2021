@@ -5,6 +5,7 @@ public interface FileSystem {
 	public String getRooot();
 	public String getParents(String path);
 	public List<FileSystem> getChildren();
+        public List<FileSystem> getChildren(String path);
 	public List<String> getAncestors(String path);
 	public String getAbsolutePath(File absolutePath);
 	public String getRelativePath(File relativePath);
@@ -22,5 +23,6 @@ public interface FileSystem {
 	boolean isIfRep();
 	File getFile();
 	List<String> getListFile();
+        public String getName(String Name );
 
 }

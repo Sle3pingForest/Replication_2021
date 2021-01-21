@@ -29,7 +29,8 @@ public class Main {
 		lsfA.setChildrenFile("h");
 		lsfA.setChildrenRep("DirTest");
                 Synchronizer s = new Synchronizer(); 
-		  List<String>  compute = s.computeDirty(lsfO, lsfA, lsfO.getRooot()); 
+		List<String>  compute = s.computeDirty(lsfO, lsfA, lsfO.getRooot()); 
+                System.out.println("test fonction get Name " + lsfO.getName(lsfB.getRooot()));
 		/*
 
         Synchronizer s = new Synchronizer(); 

@@ -266,4 +266,12 @@ public class LocalFileSystem implements FileSystem{
 		return listChildren;
     }
 
+    @Override
+    public String getName(String path ) {
+        String name ; 
+        String[] l = path.split("/");
+        name = l[l.length - 1];
+         return name ; 
+    }
+
 }
