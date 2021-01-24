@@ -12,9 +12,10 @@ public class Synchronizer {
     {
         FileSystem refCopy1 = fs1.getReference();
         FileSystem refCopy2 = fs2.getReference();
-        List<String> dirtyPaths1 = computeDirty(refCopy1, fs1, "");
+        /*
+        List<String> dirtyPaths1 = computeDirty(refCopy1, fs1, "" );
         List<String> dirtyPaths2 = computeDirty(refCopy2, fs2, "");
-        reconcile(fs1, dirtyPaths1, fs2, dirtyPaths2, "");
+        reconcile(fs1, dirtyPaths1, fs2, dirtyPaths2, "");*/
     }
     
     /**
@@ -22,11 +23,12 @@ public class Synchronizer {
      * @param fs1
      * @param dirtyPath
      */
-    public void reconcile(FileSystem fs1, List<String> dirtyPaths1, FileSystem fs2, List<String> dirtyPaths2, String currentRelativePath) 
+    public void reconcile(FileSystem fs1, List<String> dirtyPaths1, FileSystem fs2, List<String> dirtyPaths2, String currentRelativePath ) 
     {
         try {
             //condition 1
-            if (!dirtyPaths1.isEmpty() && !dirtyPaths2.isEmpty()) {
+            System.out.println("tow paths dirty");
+            if (dirtyPaths1.isEmpty() && dirtyPaths2.isEmpty()) {
                 //return A and B
                //String fsUn =   fs1.createDirectory(currentRelativePath);
                FileSystem c = new LocalFileSystem("C");
@@ -34,24 +36,25 @@ public class Synchronizer {
                FileSystem d = new LocalFileSystem("D"); 
                d.fileCopy(fs2,d);
             } //condition 3 
-            else if (!dirtyPaths2.isEmpty()) {
+            else if (dirtyPaths2.isEmpty()) {
 
             	System.out.println("dirty 2");
-                fs1.fileCopy(fs2, fs1);
+                
                  FileSystem c = new LocalFileSystem("C");
                  c.fileCopy(fs2,c);
                  FileSystem d = new LocalFileSystem("D"); 
                  d.fileCopy(fs2,d);
-            } else if (!dirtyPaths1.isEmpty()) {
-            	System.out.println("dirty 1 ");
-                fs2.fileCopy(fs1, fs2);
+            } else if (dirtyPaths1.isEmpty()) {
+            	System.out.println("dirty 1 "+fs1.getRooot());
+            
                  FileSystem c = new LocalFileSystem("C");
-                 c.fileCopy(fs1,c);
+                 fs1.fileCopy(fs1,c );
                  FileSystem d = new LocalFileSystem("D"); 
-                 d.fileCopy(fs1,d);
+                 fs1.fileCopy(fs1,d);
             } //Condition2 
             else {
                 //A
+                
                 for (Iterator it = dirtyPaths1.iterator(); it.hasNext();) {
                       FileSystem c = new LocalFileSystem("C");
                       c.fileCopy2((String) it.next(), c.getRooot());
@@ -73,7 +76,7 @@ public class Synchronizer {
     }
        
     
-    public List<String> computeDirty(FileSystem lastSync, FileSystem fs, String currentRelativePath) {
+    public List<String> computeDirty(FileSystem lastSync, FileSystem fs, String currentRelativePath , String Opath) {
         List<String> modify = new ArrayList<String>();
         /*
        * 
@@ -82,8 +85,9 @@ public class Synchronizer {
        * */
         // fs = B  ;  LastSync  C et current relative path pour le dossier actuelle A 
         // liste de O 
+        System.out.println("tester chemon de 0 "+ Opath);
         List<FileSystem> listChildrenO = new ArrayList<FileSystem>();
-        listChildrenO = fs.getChildren(fs.getParents(currentRelativePath));
+        listChildrenO = fs.getChildren(Opath);
         List<String> O = new ArrayList<String>();
         for (FileSystem a : listChildrenO) {
             O.add(a.getName(a.getRooot()));
@@ -91,6 +95,7 @@ public class Synchronizer {
 
         // d'abords je recupere la liste de B
         //list of B files 
+         System.out.println("tester chemon de B "+ fs.getRooot());
         List<FileSystem> listChildrenB = new ArrayList<FileSystem>();
         listChildrenB = fs.getChildren(fs.getRooot());
         List<String> B = new ArrayList<String>();
@@ -99,6 +104,7 @@ public class Synchronizer {
         }
 
         // je recupere la lsite de current path   A 
+         System.out.println("tester chemon de A "+currentRelativePath);
         List<FileSystem> listChildrenC = new ArrayList<FileSystem>();
         listChildrenC = fs.getChildren(currentRelativePath);
         List<String> C = new ArrayList<String>();
@@ -107,6 +113,7 @@ public class Synchronizer {
         }
 
         // et enfin je recupere la liste de dernier sync de fichier 
+        System.out.println("tester chemon de C ou D  "+lastSync.getRooot());
         List<FileSystem> lastS = new ArrayList<FileSystem>();
         lastS = lastSync.getChildren(lastSync.getRooot());
         List<String> LS = new ArrayList<String>();

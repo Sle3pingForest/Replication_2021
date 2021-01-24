@@ -7,8 +7,10 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		
 		LocalFileSystem lsfO = new LocalFileSystem("O");
+              
 		LocalFileSystem lsfA = new LocalFileSystem("A");
 		LocalFileSystem lsfB= new LocalFileSystem("B");
+                lsfO .setChildrenRep(lsfA.getRooot());
 		/*
 		lsfO.setChildrenFile("a");
 		lsfO.setChildrenFile("b");
@@ -29,8 +31,8 @@ public class Main {
 		lsfA.setChildrenFile("h");
 		lsfA.setChildrenRep("DirTest");
                 Synchronizer s = new Synchronizer(); 
-		List<String>  computeA = s.computeDirty(new LocalFileSystem("C"), lsfB, lsfA.getRooot()); 
-                List<String>  computeB = s.computeDirty(new LocalFileSystem("D"), lsfA, lsfB.getRooot()); 
+		List<String>  computeA = s.computeDirty(new LocalFileSystem("C"), lsfB, lsfA.getRooot() , lsfO.getRooot()); 
+                List<String>  computeB = s.computeDirty(new LocalFileSystem("D"), lsfA, lsfB.getRooot(), lsfO.getRooot()); 
                 s.reconcile(lsfA, computeA, lsfB, computeB, lsfO.getRooot());
 		/*
 
