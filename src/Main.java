@@ -9,7 +9,7 @@ public class Main {
 		LocalFileSystem lsfO = new LocalFileSystem("O");
 		LocalFileSystem lsfA = new LocalFileSystem("A");
 		LocalFileSystem lsfB= new LocalFileSystem("B");
-		
+		/*
 		lsfO.setChildrenFile("a");
 		lsfO.setChildrenFile("b");
 		
@@ -23,14 +23,15 @@ public class Main {
 		
 		lsfO.fileCopy(lsfO, lsfB);
 		lsfO.fileCopy(lsfO, lsfA);
-		
+		*/
 		
 
 		lsfA.setChildrenFile("h");
 		lsfA.setChildrenRep("DirTest");
                 Synchronizer s = new Synchronizer(); 
-		List<String>  compute = s.computeDirty(lsfO, lsfA, lsfO.getRooot()); 
-                System.out.println("test fonction get Name " + lsfO.getName(lsfB.getRooot()));
+		List<String>  computeA = s.computeDirty(new LocalFileSystem("C"), lsfB, lsfA.getRooot()); 
+                List<String>  computeB = s.computeDirty(new LocalFileSystem("D"), lsfA, lsfB.getRooot()); 
+                s.reconcile(lsfA, computeA, lsfB, computeB, lsfO.getRooot());
 		/*
 
         Synchronizer s = new Synchronizer(); 

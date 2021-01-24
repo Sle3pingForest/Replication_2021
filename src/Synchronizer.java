@@ -53,14 +53,16 @@ public class Synchronizer {
             else {
                 //A
                 for (Iterator it = dirtyPaths1.iterator(); it.hasNext();) {
-                    fs1.setChildrenFile((String) it.next());
+                      FileSystem c = new LocalFileSystem("C");
+                      c.fileCopy2((String) it.next(), c.getRooot());
+                    
                 }
                 //B
                 for (Iterator it = dirtyPaths2.iterator(); it.hasNext();) {
-                    fs2.setChildrenFile((String) it.next());  //a remplacer avec setchildren 
+                        FileSystem d = new LocalFileSystem("D");
+                        d.fileCopy2((String) it.next(), d.getRooot()); 
                 }
-                FileSystem A0 = fs1;
-                FileSystem B0 = fs2;
+              
 
             }
 
