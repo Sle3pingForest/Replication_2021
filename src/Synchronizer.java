@@ -27,46 +27,53 @@ public class Synchronizer {
     {
         try {
             //condition 1
-            System.out.println("tow paths dirty");
-            if (dirtyPaths1.isEmpty() && dirtyPaths2.isEmpty()) {
-                //return A and B
-               //String fsUn =   fs1.createDirectory(currentRelativePath);
-               FileSystem c = new LocalFileSystem("C");
-               c.fileCopy(fs1,c);
-               FileSystem d = new LocalFileSystem("D"); 
-               d.fileCopy(fs2,d);
-            } //condition 3 
-            else if (dirtyPaths2.isEmpty()) {
-
-            	System.out.println("dirty 2");
-                
-                 FileSystem c = new LocalFileSystem("C");
-                 c.fileCopy(fs2,c);
-                 FileSystem d = new LocalFileSystem("D"); 
-                 d.fileCopy(fs2,d);
-            } else if (dirtyPaths1.isEmpty()) {
-            	System.out.println("dirty 1 "+fs1.getRooot());
+     
+            FileSystem c = new LocalFileSystem("C");
+            FileSystem d = new LocalFileSystem("D"); 
             
-                 FileSystem c = new LocalFileSystem("C");
+            
+            if (dirtyPaths1.isEmpty() && dirtyPaths2.isEmpty()) {
+               System.out.println("tow paths dirty");
+              
+               fs1.fileCopy(fs1,c); 
+               fs1.fileCopy(fs2,d);
+            } //condition 3 
+            else if (!dirtyPaths2.isEmpty()) {  //c a dire B a été modofié alors 
+                System.out.println("dirty B");  
+              
+               
+                fs2.fileCopy(fs2,c);
+    
+                 fs2.fileCopy(fs2,d);
+            } else if (!dirtyPaths1.isEmpty()) { // si A has been modified 
+            	System.out.println("dirty A "+fs1.getRooot());  
+                 //FileSystem c = new LocalFileSystem("C");
                  fs1.fileCopy(fs1,c );
-                 FileSystem d = new LocalFileSystem("D"); 
+                // FileSystem d = new LocalFileSystem("D"); 
                  fs1.fileCopy(fs1,d);
-            } //Condition2 
-            else {
+             } //Condition2 
+            else if (!dirtyPaths1.isEmpty() && !dirtyPaths2.isEmpty()) {
                 //A
                 
                 for (Iterator it = dirtyPaths1.iterator(); it.hasNext();) {
-                      FileSystem c = new LocalFileSystem("C");
+                      //FileSystem c = new LocalFileSystem("C");
                       c.fileCopy2((String) it.next(), c.getRooot());
+                      c.createFile(c.getRooot());
                     
                 }
                 //B
                 for (Iterator it = dirtyPaths2.iterator(); it.hasNext();) {
-                        FileSystem d = new LocalFileSystem("D");
+                     //   FileSystem d = new LocalFileSystem("D");
                         d.fileCopy2((String) it.next(), d.getRooot()); 
                 }
               
 
+            }
+            else
+            {
+                   c.fileCopy(fs1,c);
+          
+               d.fileCopy(fs2,d);
             }
 
         } catch (Exception ex) {
